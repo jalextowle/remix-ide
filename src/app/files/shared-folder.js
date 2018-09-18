@@ -56,6 +56,18 @@ module.exports = class SharedFolder {
     })
   }
 
+  truffle_init (cb) {
+    this._remixd.call('sharedfolder', 'init', {}, (error, output) => {
+      cb(error, output)
+    })
+  }
+
+  truffle_test (cb) {
+    this._remixd.call('sharedfolder', 'test', {}, (error, output) => {
+      cb(error, output)
+    })
+  }
+
   // @TODO: refactor all `this._remixd.call(....)` uses into `this.remixd[api](...)`
   // where `api = ...`:
   // this.remixd.read(path, (error, content) => {})

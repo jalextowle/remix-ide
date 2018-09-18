@@ -120,6 +120,12 @@ function filepanel (localRegistry) {
             <span onclick=${connectToLocalhost} class="${css.connectToLocalhost}">
               <i class="websocketconn fa fa-link" title="Connect to Localhost"></i>
             </span>
+            <span onclick=${truffleInit} class="${css.connectToLocalhost}">
+              <i class="websocketconn fa fa-link" title="Truffle Init"></i>
+            </span>
+            <span onclick=${truffleTest} class="${css.connectToLocalhost}">
+              <i class="websocketconn fa fa-link" title="Truffle Test"></i>
+            </span>
           </div>
           <div class=${css.treeviews}>
             <div class=${css.treeview}>${fileExplorer.init()}</div>
@@ -313,6 +319,33 @@ function filepanel (localRegistry) {
     }
   }
 
+  function truffleInit () {
+    if (self._deps.fileProviders['localhost'].isConnected()) {
+      modalDialog('Truffle Init', remixdDialog(),
+        { label: 'Truffle Init',
+          fn: () => {
+            self._deps.fileProviders['localhost'].truffle_init((error, output) => {
+              if (error) {
+                console.log(error)
+              }
+            })
+          }})
+    }
+  }
+
+  function truffleTest () {
+    if (self._deps.fileProviders['localhost'].isConnected()) {
+      modalDialog('Truffle Test', remixdDialog(),
+        { label: 'Truffle Test',
+          fn: () => {
+            self._deps.fileProviders['localhost'].truffle_test((error, output) => {
+              if (error) {
+                console.log(error)
+              }
+            })
+          }})
+    }
+  }
   // ------------------ gist publish --------------
 
   function updateGist () {
