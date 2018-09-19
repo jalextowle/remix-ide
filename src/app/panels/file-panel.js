@@ -328,6 +328,7 @@ function filepanel (localRegistry) {
             self._deps.fileProviders['localhost'].truffle_init((error, output) => {
               if (error) {
                 console.log(error)
+                self._deps.editorpanel.logHtmlMessage(yo`<p>Truffle Init Failed</p>`)
               } else if (output) {
                 self._deps.editorpanel.logHtmlMessage(yo`<p>${output}</p>`)
               }
@@ -344,6 +345,7 @@ function filepanel (localRegistry) {
             self._deps.fileProviders['localhost'].truffle_test((error, output) => {
               if (error) {
                 console.log(error)
+                self._deps.editorpanel.logHtmlMessage(yo`<p>Truffle Test Failed</p>`)
               } else if (output) {
                 output = output.replace(/\[0m/g, '')
                 output = output.replace(/\[32m/g, '')
