@@ -57,13 +57,13 @@ module.exports = class SharedFolder {
   }
 
   truffle_init (cb) {
-    this._remixd.call('sharedfolder', 'init', {}, (error, output) => {
+    this._remixd.call('truffle', 'init', {}, (error, output) => {
       cb(error, output)
     })
   }
 
   truffle_test (cb) {
-    this._remixd.call('sharedfolder', 'test', {}, (error, output) => {
+    this._remixd.call('truffle', 'test', {}, (error, output) => {
       cb(error, output)
     })
   }

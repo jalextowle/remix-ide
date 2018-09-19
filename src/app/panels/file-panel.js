@@ -50,7 +50,8 @@ function filepanel (localRegistry) {
     fileProviders: self._components.registry.get('fileproviders').api,
     fileManager: self._components.registry.get('filemanager').api,
     config: self._components.registry.get('config').api,
-    compiler: self._components.registry.get('compiler').api
+    compiler: self._components.registry.get('compiler').api,
+    editorpanel: self._components.registry.get('editorpanel').api
   }
   var fileExplorer = new FileExplorer(self._components.registry, self._deps.fileProviders['browser'])
   var fileSystemExplorer = new FileExplorer(self._components.registry, self._deps.fileProviders['localhost'])
@@ -327,6 +328,8 @@ function filepanel (localRegistry) {
             self._deps.fileProviders['localhost'].truffle_init((error, output) => {
               if (error) {
                 console.log(error)
+              } else if (output) {
+                self._deps.editorpanel.logHtmlMessage(yo`<p>${output}</p>`)
               }
             })
           }})
@@ -341,6 +344,15 @@ function filepanel (localRegistry) {
             self._deps.fileProviders['localhost'].truffle_test((error, output) => {
               if (error) {
                 console.log(error)
+              } else if (output) {
+                output = output.replace(/\[0m/g, '')
+                output = output.replace(/\[32m/g, '')
+                output = output.replace(/\[90m/g, '')
+                output = output.replace(/\[92m/g, '')
+                var arr = output.split('\n')
+                arr = arr.slice(2, arr.length)
+                output = arr.join('\n')
+                self._deps.editorpanel.logHtmlMessage(yo`<p>${output}</p>`)
               }
             })
           }})
